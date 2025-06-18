@@ -2,3 +2,6 @@ pandas
 numpy
 matplotlib
 pandas_datareader
+yfinance
+datetime
+plotly

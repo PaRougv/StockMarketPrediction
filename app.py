@@ -32,3 +32,13 @@ data01 = pd.read_csv("powergrid.csv")
 fig = go.Figure(data=[go.Candlestick(x = data01['Date'], open = data01['Open'], high = data01['High'], low = data01['Low'], close = data01['Close'])])
 fig.update_layout(xaxis_rangeslider_visible = False)
 fig.show()
+
+#df.drop(['Date' , 'Adj Close'], axis = 1)
+
+plt.figure(figsize = (12 , 6))
+plt.plot(df['Close'], label = f'{stock} Closing over time', linewidth = 1)
+plt.title("Closing of Stockes over time Graph")
+plt.xlabel("Date")
+plt.ylabel("Closing Price")
+plt.legend()
+plt.show()
