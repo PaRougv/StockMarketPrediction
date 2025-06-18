@@ -18,11 +18,11 @@ df = yf.download(stock , start , end)
 #print(df.head())
 #print(df.tail())
 
-print(df.shape)
+#print(df.shape)
 
-print(df.info())
+#print(df.info())
 
-print(df.describe())
+#print(df.describe())
 df = df.reset_index()
 
 df.to_csv("powergrid.csv")
@@ -35,10 +35,19 @@ fig.show()
 
 #df.drop(['Date' , 'Adj Close'], axis = 1)
 
+print(df.columns)
+
+movingavg100 = df.Close.rolling(100).mean()
+movingavg200 = df.Close.rolling(200).mean()
+
+
 plt.figure(figsize = (12 , 6))
 plt.plot(df['Close'], label = f'{stock} Closing over time', linewidth = 1)
+plt.plot(movingavg100, label = f'{stock} Moving Average Over 100 Values', linewidth = 1)
+plt.plot(movingavg200, label = f'{stock} Moving Average Over 200 Values', linewidth = 1)
 plt.title("Closing of Stockes over time Graph")
 plt.xlabel("Date")
 plt.ylabel("Closing Price")
 plt.legend()
 plt.show()
+
