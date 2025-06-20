@@ -108,4 +108,7 @@ model.add(Dropout(0.5))
 
 model.add(Dense(units = 1))
 
-print(model.summary())
+#print(model.summary())
+
+model.compile(optimizer = 'adam', loss = 'mean_squared_error')
+model.fit(x_train, y_train, epochs = 50)
