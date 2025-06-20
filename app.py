@@ -111,4 +111,46 @@ model.add(Dense(units = 1))
 #print(model.summary())
 
 model.compile(optimizer = 'adam', loss = 'mean_squared_error')
-model.fit(x_train, y_train, epochs = 50)
+model.fit(x_train, y_train, epochs = 50) #change epochs according to your requirement
+
+past_100_days = data_training.tail(100)
+final_df = pd.concat([past_100_days, data_testing], ignore_index=True)
+
+print(final_df.head())
+
+input_data = scaler.fit_transform(final_df)
+
+x_test = []
+y_test = []
+
+
+for i in range(100,input_data.shape[0]):
+    x_test.append(input_data[i-100 : i])
+    y_test.append(input_data[i,0])
+
+x_test , y_test = np.array(x_test) , np.array(y_test)
+
+
+print(x_test.shape)
+
+y_predicted = model.predict(x_test)
+
+#print(y_predicted.shape)
+
+#print(scaler.scale_)
+
+scaler_factor = (1 / 0.00689952)
+y_predicted = y_predicted * scaler_factor
+y_test = y_test * scaler_factor
+
+
+
+plt.figure(figsize = (12 , 6))
+plt.plot(y_test, label = 'Orignal Values', linewidth = 1)
+plt.plot(y_predicted, label = 'Predicted Values', linewidth = 1)
+plt.xlabel("Date")
+plt.ylabel("Price")
+plt.legend()
+plt.show()
+
+model.save('stock_dl_model.h5')
